@@ -135,6 +135,8 @@ Hardware_Message() {
 		ret=4
 	elif grep -q "Raspberry Pi 5 Model B" $Hardware_PATH; then
 		ret=5
+	elif grep -q "Raspberry Pi Compute Module 5 Lite Rev 1.0\|Raspberry Pi Compute Module 5 Rev 1.0" $Hardware_PATH; then
+		ret=6
 	else
 		ret=255
 	fi
@@ -160,6 +162,12 @@ elif [ $Hardware_Message_Value -eq 5 ]; then
 	printf "The raspberry PI hardware platform is pi5\n"
 	if [ "$DRIVE_PARAM2" == "I2C_bus=10" ]; then
 		DRIVE_PARAM2="I2C_bus=4"
+	fi
+	cd ./pi5
+elif [ $Hardware_Message_Value -eq 6 ]; then
+	printf "The raspberry PI hardware platform is cm5\n"
+	if [ "$DRIVE_PARAM2" == "I2C_bus=10" ]; then
+		DRIVE_PARAM2="I2C_bus=0"
 	fi
 	cd ./pi5
 else
